@@ -12,7 +12,7 @@ for pdbfile in *.pdb; do
   cd procheck
 
   # Execute the cns_pdb_converter.py script with the copied file as an argument
-  cns_pdb_converter.py "$pdbfile"
+  cns_pdb_converter "$pdbfile"
 
   rm "$pdbfile"
 
