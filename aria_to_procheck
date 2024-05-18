@@ -1,0 +1,33 @@
+#!/bin/bash
+
+# Create the "procheck" directory if it doesn't exist
+mkdir -p procheck
+
+# Iterate over all .pdb files in the current directory
+for pdbfile in *.pdb; do
+  # Copy the pdbfile to the procheck directory
+  cp "$pdbfile" procheck/
+
+  # Change to the procheck directory
+  cd procheck
+
+  # Execute the cns_pdb_converter.py script with the copied file as an argument
+  cns_pdb_converter.py "$pdbfile"
+
+  rm "$pdbfile"
+
+  # Change back to the original directory
+  cd ..
+done
+
+cd procheck
+
+for file in *_01*; do
+    new_name=$(echo "$file" | sed 's/_01//')
+    mv "$file" "$new_name"
+done
+
+for newfile in *.pdb; do
+  procheck "$newfile" A 1.5
+done
+
